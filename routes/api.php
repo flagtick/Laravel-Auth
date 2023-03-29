@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('/sample', function() {
+        return response()->json(['message' => 'This is an example'], 200);
+    });
 });
